@@ -103,7 +103,8 @@ class InferlessPythonModel:
         if not os.path.exists(os.path.join(self.ASSERTS_PATH, "asserts")):
             gdown.download(f"https://drive.google.com/uc?id={FILE_ID}", FILE_NAME, quiet=False)
             self.extract_zip(FILE_NAME, os.getcwd())
-            os.system(f"cp asserts {self.ASSERTS_PATH}")
+            if os.getcwd() != self.ASSERTS_PATH:
+                os.system(f"mv asserts {self.ASSERTS_PATH}")
 
     def infer(self, inputs):
         video_url = inputs["video_url"]
