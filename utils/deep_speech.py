@@ -19,9 +19,9 @@ class DeepSpeech():
             graph_def.ParseFromString(f.read())
         graph = tf.compat.v1.get_default_graph()
         tf.import_graph_def(graph_def, name="deepspeech")
-        logits_ph = graph.get_tensor_by_name("deepspeech/logits:0")
-        input_node_ph = graph.get_tensor_by_name("deepspeech/input_node:0")
-        input_lengths_ph = graph.get_tensor_by_name("deepspeech/input_lengths:0")
+        logits_ph = graph.get_tensor_by_name("logits:0")
+        input_node_ph = graph.get_tensor_by_name("input_node:0")
+        input_lengths_ph = graph.get_tensor_by_name("input_lengths:0")
 
         return graph, logits_ph, input_node_ph, input_lengths_ph
 
