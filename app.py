@@ -93,15 +93,17 @@ class InferlessPythonModel:
     def initialize(self):
         FILE_ID = "1CkeEn7l3PuubuJIMWNjWpIrt0HDd_AB3"
         FILE_NAME = "asserts.zip"
+        self.ASSERTS_PATH = None
 
-        destination = os.path.join(os.getcwd(), FILE_NAME)
+        if os.path.exists("/var/nfs-mount/model_cache/Listen2"):
+            self.ASSERTS_PATH = "/var/nfs-mount/model_cache/Listen2"
+        else:
+            self.ASSERTS_PATH = os.getcwd()
 
-        # Download the file from Google Drive using gdown
-        gdown.download(f"https://drive.google.com/uc?id={FILE_ID}", destination, quiet=False)
-
-        # Extract the downloaded zip file
-        self.extract_zip(destination, os.getcwd())
-
+        if not os.path.exists(os.path.join(self.ASSERTS_PATH, "asserts")):
+            gdown.download(f"https://drive.google.com/uc?id={FILE_ID}", FILE_NAME, quiet=False)
+            self.extract_zip(FILE_NAME, os.getcwd())
+            os.system(f"cp asserts {self.ASSERTS_PATH}")
 
     def infer(self, inputs):
         video_url = inputs["video_url"]
@@ -115,7 +117,8 @@ class InferlessPythonModel:
         inputs["source_video_path"] = video_input_path
         inputs["driving_audio_path"] = audio_input_path
 
-        opt = DINetInferenceOptionsJson(inputs)
+        print("ASSERTS PATH--->", self.ASSERTS_PATH)
+        opt = DINetInferenceOptionsJson(inputs, self.ASSERTS_PATH)
         if not os.path.exists(opt.source_video_path):
             raise ('wrong video path : {}'.format(opt.source_video_path))
         ############################################## extract frames from source video ##############################################

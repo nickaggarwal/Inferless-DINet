@@ -111,15 +111,15 @@ class DINetInferenceOptions():
 
 
 class DINetInferenceOptionsJson():
-    def __init__(self, data) -> None:
+    def __init__(self, data, ASSERTS_PATH) -> None:
         self.source_channel = data['source_channel'] if 'source_channel' in data else 3
         self.ref_channel = data['ref_channel'] if 'ref_channel' in data else 15
         self.audio_channel = data['audio_channel'] if 'audio_channel' in data else 29
         self.mouth_region_size = data['mouth_region_size'] if 'mouth_region_size' in data else 256
-        self.source_video_path = data['source_video_path'] if 'source_video_path' in data else './asserts/examples/test4.mp4'
-        self.source_openface_landmark_path = data['source_openface_landmark_path'] if 'source_openface_landmark_path' in data else './asserts/examples/test4.csv'
-        self.driving_audio_path = data['driving_audio_path'] if 'driving_audio_path' in data else './asserts/examples/driving_audio_1.wav'
+        self.source_video_path = data['source_video_path'] if 'source_video_path' in data else f'{ASSERTS_PATH}/asserts/examples/test4.mp4'
+        self.source_openface_landmark_path = data['source_openface_landmark_path'] if 'source_openface_landmark_path' in data else f'{ASSERTS_PATH}/asserts/examples/test4.csv'
+        self.driving_audio_path = data['driving_audio_path'] if 'driving_audio_path' in data else f'{ASSERTS_PATH}/asserts/examples/driving_audio_1.wav'
 
-        self.pretrained_clip_DINet_path = data['pretrained_clip_DINet_path'] if 'pretrained_clip_DINet_path' in data else './asserts/clip_training_DINet_256mouth.pth'
-        self.deepspeech_model_path = data['deepspeech_model_path'] if 'deepspeech_model_path' in data else './asserts/output_graph.pb'
-        self.res_video_dir = data['res_video_dir'] if 'res_video_dir' in data else './asserts/inference_result'
+        self.pretrained_clip_DINet_path = data['pretrained_clip_DINet_path'] if 'pretrained_clip_DINet_path' in data else f'{ASSERTS_PATH}/asserts/clip_training_DINet_256mouth.pth'
+        self.deepspeech_model_path = data['deepspeech_model_path'] if 'deepspeech_model_path' in data else f'{ASSERTS_PATH}/asserts/output_graph.pb'
+        self.res_video_dir = data['res_video_dir'] if 'res_video_dir' in data else f'{ASSERTS_PATH}/asserts/inference_result'
