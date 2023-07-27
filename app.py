@@ -18,15 +18,40 @@ from collections import OrderedDict
 
 class InferlessUtils:
     @staticmethod
-    def base64_to_file(base64_string, file_path):
-        with open(file_path, "wb") as fh:
-            fh.write(base64.decodebytes(base64_string.encode()))
-
-    @staticmethod
     def cleanup(video_input_path, audio_input_path, video_output_path):
         os.remove(video_input_path)
         os.remove(audio_input_path)
         os.remove(video_output_path)
+
+    @staticmethod
+    def download_video(video_url, file_name):
+        response = requests.get(video_url, stream=True)
+
+        response.raise_for_status()
+
+        full_path = os.path.join(os.getcwd(), file_name)
+
+        with open(full_path, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+
+        return full_path
+
+    @staticmethod
+    def download_audio(audio_url, file_name):
+        response = requests.get(audio_url, stream=True)
+
+        response.raise_for_status()
+
+        full_path = os.path.join(os.getcwd(), file_name)
+
+        with open(full_path, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+
+        return full_path
 
 class InferlessPythonModel:
     def extract_frames_from_video(self, video_path,save_dir):
@@ -79,13 +104,13 @@ class InferlessPythonModel:
 
 
     def infer(self, inputs):
-        video_input = inputs["video_input"]
-        audio_input = inputs["audio_input"]
+        video_url = inputs["video_url"]
+        audio_url = inputs["audio_url"]
         video_input_path = "video_input.mp4"
         audio_input_path = "audio_input.wav"
 
-        InferlessUtils.base64_to_file(video_input, video_input_path)
-        InferlessUtils.base64_to_file(audio_input, audio_input_path)
+        video_input_path = InferlessUtils.download_video(video_url, video_input_path)
+        audio_input_path = InferlessUtils.download_audio(audio_url, audio_input_path)
 
         inputs["source_video_path"] = video_input_path
         inputs["driving_audio_path"] = audio_input_path
