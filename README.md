@@ -34,28 +34,28 @@ The following is a sample Input and Output JSON for this model which you can use
 ### Input
 ```json
 {
-    "inputs": [
-        {
-            "name": "video_input",
-            "datatype": "BYTES",
-            "shape": [
-                1
-            ],
-            "data": [
-                "<base_64_video_file>"
-            ]
-        },
-        {
-            "name": "audio_input",
-            "datatype": "BYTES",
-            "shape": [
-                1
-            ],
-            "data": [
-                "<base_64_audio_wav_file>"
-            ]
-        }
-    ]
+  "inputs": [
+    {
+      "data": [
+        "https://infer-global-models.s3.amazonaws.com/DINet/test4.mp4"
+      ],
+      "name": "video_url",
+      "shape": [
+        1
+      ],
+      "datatype": "BYTES"
+    },
+    {
+      "data": [
+        "https://infer-global-models.s3.amazonaws.com/DINet/driving_audio_1.wav"
+      ],
+      "name": "audio_url",
+      "shape": [
+        1
+      ],
+      "datatype": "BYTES"
+    }
+  ]
 }
 ```
 
@@ -86,28 +86,28 @@ curl --location '<your_inference_url>' \
           --header 'Content-Type: application/json' \
           --header 'Authorization: Bearer <your_api_key>' \
           --data '{
-                    "inputs": [
-                        {
-                            "name": "video_input",
-                            "datatype": "BYTES",
-                            "shape": [
-                                1
-                            ],
-                            "data": [
-                                "<base_64_video_file>"
-                            ]
-                        },
-                        {
-                            "name": "audio_input",
-                            "datatype": "BYTES",
-                            "shape": [
-                                1
-                            ],
-                            "data": [
-                                "<base_64_audio_wav_file>"
-                            ]
-                        }
-                    ]
+                  "inputs": [
+                    {
+                      "data": [
+                        "https://infer-global-models.s3.amazonaws.com/DINet/test4.mp4"
+                      ],
+                      "name": "video_url",
+                      "shape": [
+                        1
+                      ],
+                      "datatype": "BYTES"
+                    },
+                    {
+                      "data": [
+                        "https://infer-global-models.s3.amazonaws.com/DINet/driving_audio_1.wav"
+                      ],
+                      "name": "audio_url",
+                      "shape": [
+                        1
+                      ],
+                      "datatype": "BYTES"
+                    }
+                  ]
                 }
             '
 ```
